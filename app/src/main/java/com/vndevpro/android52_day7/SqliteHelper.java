@@ -91,6 +91,26 @@ public class SqliteHelper extends SQLiteOpenHelper {
         database.close();
     }
 
+    public void ThemMusic(int id, Product product){
+        SQLiteDatabase database = getWritableDatabase();
+        String whereClause = ID_COLUMN + " LIKE? ";
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TITLE_COLUMN, product.getTitle());
+        contentValues.put(DES_COLUMN, product.getDescription());
+        contentValues.put(PRICES_COLUMN, product.getPrice());
+        contentValues.put(DISCOUNT_COLUMN, product.getDiscountPercentage());
+        contentValues.put(RATING_COLUMN, product.getRating());
+        contentValues.put(STOCK_COLUMN, product.getStock());
+        contentValues.put(BRAND_COLUMN, product.getBrand());
+        contentValues.put(CATEGORY_COLUMN, product.getCategory());
+        contentValues.put(THUMBNAIL_COLUMN, product.getThumbnail());
+        contentValues.put(IMAGES_COLUMN, product.getImages());
+
+        database.update(TABLE_NAME, contentValues, whereClause, new String[]{id + ""});
+        database.close();
+    }
+
     public ArrayList<Product> getListProduct() {
         ArrayList<Product> result = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
